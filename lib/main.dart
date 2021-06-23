@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pay_flow/app.dart';
+
+import 'app_firabse_widget.dart';
 
 void main() {
-  runApp(App());
+  runApp(AppFirebase());
 }

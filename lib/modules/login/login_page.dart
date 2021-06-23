@@ -4,6 +4,8 @@ import 'package:pay_flow/shared/themes/app_images.dart';
 import 'package:pay_flow/shared/themes/app_text_styles.dart';
 import 'package:pay_flow/shared/widgets/social_login_button.dart';
 
+import 'login_controller.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -13,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late Size size;
+  final loginController = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +73,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: EdgeInsets.only(left: 40, right: 40, top: 40),
             child: SocialLoginButton(
-              onTap: () {
-                print('Clicou');
-              },
+              onTap: () => loginController.signIn(context),
             ),
           ),
         ],

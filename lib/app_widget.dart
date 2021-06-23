@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pay_flow/modules/login/login_page.dart';
+import 'package:pay_flow/modules/home/home_page.dart';
 import 'package:pay_flow/modules/splash/splash_page.dart';
-import 'package:pay_flow/shared/themes/app_colors.dart';
+
+import 'modules/login/login_page.dart';
+import 'shared/themes/app_colors.dart';
 
 class App extends StatefulWidget {
-  const App({ Key? key }) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -19,7 +21,12 @@ class _AppState extends State<App> {
       theme: ThemeData(
         primaryColor: AppColors.primary,
       ),
-      home: LoginPage(),
+      initialRoute: "/splash",
+      routes: {
+        "/splash": (context) => SplashPage(),
+        "/home": (context) => HomePage(),
+        "/login": (context) => LoginPage(),
+      },
     );
   }
 }
