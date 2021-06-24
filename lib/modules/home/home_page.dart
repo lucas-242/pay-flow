@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               color: AppColors.primary,
             ),
             GestureDetector(
-              onTap: () => null,
+              onTap: () => Navigator.pushNamed(context, '/barcode_scanner'),
               child: Container(
                 width: 56,
                 height: 56,
