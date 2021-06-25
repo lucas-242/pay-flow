@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pay_flow/modules/insert_bill/insert_bill_page.dart';
+import 'package:pay_flow/shared/models/user_model.dart';
 
 import 'modules/barcode_scanner/barcode_scanner_page.dart';
 import 'modules/home/home_page.dart';
@@ -29,10 +30,15 @@ class App extends StatelessWidget {
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => SplashPage(),
-        "/home": (context) => HomePage(),
+        "/home": (context) => HomePage(
+              user: ModalRoute.of(context)!.settings.arguments as User,
+            ),
         "/login": (context) => LoginPage(),
         "/barcode_scanner": (context) => BarcodeScannerPage(),
-        "/insert_bill": (context) => InsertBillPage(),
+        "/insert_bill": (context) => InsertBillPage(
+            barcode: ModalRoute.of(context) != null
+                ? ModalRoute.of(context)!.settings.arguments.toString()
+                : ''),
       },
     );
   }

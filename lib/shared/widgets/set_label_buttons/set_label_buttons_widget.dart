@@ -9,6 +9,7 @@ class SetLabelButtons extends StatelessWidget {
   final String secundaryLabel;
   final VoidCallback? secundaryOnPressed;
   final bool enablePrimaryColor;
+  final bool enableSecundaryColor;
 
   const SetLabelButtons({
     Key? key,
@@ -17,6 +18,7 @@ class SetLabelButtons extends StatelessWidget {
     required this.secundaryLabel,
     this.secundaryOnPressed,
     this.enablePrimaryColor = false,
+    this.enableSecundaryColor = false,
   }) : super(key: key);
 
   @override
@@ -24,22 +26,38 @@ class SetLabelButtons extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.08,
-      color: AppColors.shape,
-      child: Row(
+      height: size.height * 0.085,
+      color: AppColors.background,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: LabelButton(
-              label: primaryLabel,
-              onPressed: primaryOnPressed,
-              style: enablePrimaryColor ? AppTextStyles.buttonPrimary : null,
-            ),
+          Divider(
+            thickness: 1,
+            height: 1,
+            color: AppColors.stroke,
           ),
-          VerticalDivider(),
-          Expanded(
-            child: LabelButton(
-              label: secundaryLabel,
-              onPressed: secundaryOnPressed,
+          Container(
+            height: size.height * 0.08,
+            child: Row(
+              children: [
+                Expanded(
+                  child: LabelButton(
+                    label: primaryLabel,
+                    onPressed: primaryOnPressed,
+                    style:
+                        enablePrimaryColor ? AppTextStyles.buttonPrimary : null,
+                  ),
+                ),
+                VerticalDivider(),
+                Expanded(
+                  child: LabelButton(
+                    label: secundaryLabel,
+                    onPressed: secundaryOnPressed,
+                    style:
+                        enableSecundaryColor ? AppTextStyles.buttonPrimary : null,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

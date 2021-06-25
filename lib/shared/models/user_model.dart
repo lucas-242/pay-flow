@@ -6,7 +6,7 @@ class User {
 
   User({required this.name, this.photoUrl});
 
-  toMap() => {"name": name, "phtoUrl": photoUrl};
+  toMap() => {"name": name, "photoUrl": photoUrl};
 
   String toJson() => jsonEncode(toMap());
 

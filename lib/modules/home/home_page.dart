@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:pay_flow/modules/extract/extract_page.dart';
+import 'package:pay_flow/modules/my_bills/my_bills_page.dart';
+import 'package:pay_flow/shared/models/user_model.dart';
 import 'package:pay_flow/shared/themes/app_colors.dart';
 import 'package:pay_flow/shared/themes/app_text_styles.dart';
 
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final User user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final homeController = HomeController();
-  final pages = [
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.red,
-    ),
-  ];
+  final controller = HomeController();
   late Size size;
 
   @override
@@ -40,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                     style: AppTextStyles.titleRegular,
                     children: [
                       TextSpan(
-                          text: 'Amigo',
+                          text: widget.user.name,
                           style: AppTextStyles.titleBoldBackground)
                     ]),
               ),
@@ -52,15 +48,23 @@ class _HomePageState extends State<HomePage> {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
-                ),
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.user.photoUrl ?? ''))),
               ),
             ),
           ),
         ),
       ),
-      body: pages[homeController.currentPage],
+      body: [
+        MyBillsPage(
+          key: UniqueKey(),
+        ),
+        ExtractPage(
+          key: UniqueKey(),
+        ),
+      ][controller.currentPage],
       bottomNavigationBar: Container(
         height: 90,
         child: Row(
@@ -68,14 +72,19 @@ class _HomePageState extends State<HomePage> {
           children: [
             IconButton(
               onPressed: () {
-                homeController.setPage(0);
+                controller.setPage(0);
                 setState(() {});
               },
               icon: Icon(Icons.home),
-              color: AppColors.primary,
+              color: controller.currentPage == 0
+                  ? AppColors.primary
+                  : AppColors.body,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/barcode_scanner'),
+              onTap: () async {
+                await Navigator.pushNamed(context, '/barcode_scanner');
+                setState(() {});
+              },
               child: Container(
                 width: 56,
                 height: 56,
@@ -90,11 +99,13 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {
-                homeController.setPage(1);
+                controller.setPage(1);
                 setState(() {});
               },
               icon: Icon(Icons.description_outlined),
-              color: AppColors.body,
+              color: controller.currentPage == 1
+                  ? AppColors.primary
+                  : AppColors.body,
             ),
           ],
         ),
